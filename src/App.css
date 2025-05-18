@@ -1,0 +1,363 @@
+:root {
+  --background-light: #ffffff;
+  --text-light: #213547;
+  --background-dark: #242424;
+  --text-dark: rgba(255, 255, 255, 0.87);
+  --casino-green: #0a5c36;
+  --casino-green-dark: #0b6e42; /* Brighter, more vibrant green for dark mode */
+  --primary-color: #646cff;
+  --primary-color-hover: #535bf2;
+  --secondary-color: #f9f9f9;
+  --secondary-color-dark: #1a1a1a;
+  --card-transition-duration: 0.4s;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-light);
+  color: var(--text-light);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+html.dark {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
+
+html.dark body,
+html.dark #root,
+html.dark .app-wrapper {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
+
+html:not(.dark) {
+  background-color: var(--background-light);
+  color: var(--text-light);
+}
+
+html:not(.dark) body,
+html:not(.dark) #root,
+html:not(.dark) .app-wrapper {
+  background-color: var(--background-light);
+  color: var(--text-light);
+}
+
+/* Ensure the root div also has the correct background */
+#root {
+  min-height: 100vh;
+  background-color: inherit;
+}
+
+.dark {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
+
+.light {
+  background-color: var(--background-light);
+  color: var(--text-light);
+}
+
+.app-wrapper {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.theme-toggle {
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.theme-toggle.dark {
+  background-color: #333;
+  color: #f0f0f0;
+}
+
+.theme-toggle.light {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.casino-felt {
+  background-color: var(--casino-green);
+  color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.dark .casino-felt {
+  background-color: var(--casino-green-dark);
+}
+
+/* Card area and grid */
+.card-area {
+  position: relative;
+  min-height: 300px;
+  transition: all var(--card-transition-duration);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+  transition: opacity var(--card-transition-duration);
+}
+
+.input-mode .card-grid {
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.card-slot {
+  min-height: 9rem;
+  border-radius: 0.5rem;
+  transition: all var(--card-transition-duration);
+}
+
+/* Playing card styles */
+.playing-card {
+  transition: all var(--card-transition-duration);
+  height: 100%;
+}
+
+.playing-card.card-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.playing-card.card-hidden {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.playing-card:hover {
+  transform: scale(1.05);
+}
+
+.playing-card img {
+  width: 100%;
+  max-width: 6rem;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Centered input container */
+.centered-input-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  transition: opacity var(--card-transition-duration);
+  animation: fadeIn var(--card-transition-duration);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.centered-input {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  width: 80%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.dark .centered-input {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.count-input {
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .input-group {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+.submit-button {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .submit-button {
+    margin-top: 0;
+    width: auto;
+  }
+}
+
+.input-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.dark .input {
+  background-color: #1f2937;
+  border-color: #374151;
+  color: white;
+}
+
+.button {
+  font-weight: 500;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.25s;
+}
+
+.button-primary {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+}
+
+.button-primary:hover {
+  background-color: #2563eb;
+}
+
+.button-secondary {
+  background-color: #e5e7eb;
+  color: #1f2937;
+  border: none;
+}
+
+.button-secondary:hover {
+  background-color: #d1d5db;
+}
+
+.dark .button-secondary {
+  background-color: #374151;
+  color: white;
+}
+
+.dark .button-secondary:hover {
+  background-color: #4b5563;
+}
+
+.feedback {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+}
+
+.feedback-correct {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.dark .feedback-correct {
+  background-color: #065f46;
+  color: #d1fae5;
+}
+
+.feedback-incorrect {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.dark .feedback-incorrect {
+  background-color: #b91c1c;
+  color: #fee2e2;
+}
+
+.feedback-info {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.dark .feedback-info {
+  background-color: #1e40af;
+  color: #dbeafe;
+}
+
+.footer {
+  margin-top: 3rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.dark .footer {
+  color: #9ca3af;
+}
+
+.counting-rules {
+  margin-top: 2rem;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 1rem;
+}
+
+.dark .counting-rules {
+  border-top-color: #374151;
+}
+
+.counting-rules h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.counting-rules ul {
+  list-style-type: disc;
+  padding-left: 1.25rem;
+}
