@@ -14,12 +14,6 @@ interface CountSightTrainerProps {
    * @default ''
    */
   className?: string;
-  
-  /**
-   * Optional function to handle creating a new drill
-   * If provided, this will be used instead of the internal dealNewCards function
-   */
-  onNewDrill?: () => void;
 }
 
 /**
@@ -36,7 +30,7 @@ interface CountSightTrainerProps {
  * @param props - The component props
  * @returns A React component for card counting practice
  */
-const CountSightTrainer: React.FC<CountSightTrainerProps> = ({ className = '', onNewDrill }) => {
+const CountSightTrainer: React.FC<CountSightTrainerProps> = ({ className = '' }) => {
   const {
     cards,
     isShowingCards,
