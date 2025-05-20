@@ -127,6 +127,59 @@ html:not(.dark) .app-wrapper {
   transition: opacity var(--card-transition-duration);
 }
 
+/* Mobile portrait optimization */
+@media (max-width: 767px) and (orientation: portrait) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr); /* Change to 2 columns for portrait */
+    gap: 0.5rem; /* Reduce gap for smaller screens */
+  }
+  
+  .card-slot {
+    min-height: 7rem; /* Smaller card height */
+  }
+  
+  .container {
+    padding: 1rem; /* Reduce padding */
+  }
+  
+  h1 {
+    font-size: 1.5rem; /* Smaller heading */
+  }
+  
+  .centered-input {
+    width: 90%; /* Wider input container */
+    padding: 1rem; /* Less padding */
+  }
+  
+  .playing-card img {
+    max-width: 100%; /* Allow cards to be larger */
+  }
+  
+  /* Improve touch targets for mobile */
+  .button {
+    padding: 0.75rem 1rem; /* Larger touch targets */
+    min-height: 44px; /* Apple's recommended minimum */
+  }
+  
+  .input {
+    padding: 0.75rem;
+    font-size: 16px; /* Prevents iOS zoom on focus */
+  }
+  
+  /* Reduce spacing for mobile */
+  .casino-felt {
+    padding: 1rem;
+  }
+  
+  .counting-rules {
+    margin-top: 1rem;
+  }
+  
+  .counting-rules ul {
+    padding-left: 1rem;
+  }
+}
+
 .input-mode .card-grid {
   opacity: 0.1;
   pointer-events: none;

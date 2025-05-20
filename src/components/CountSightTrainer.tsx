@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import PlayingCard from './PlayingCard';
 import Button from './UI/Button';
 import Input from './UI/Input';
@@ -43,6 +43,16 @@ const CountSightTrainer: React.FC<CountSightTrainerProps> = ({ className = '' })
     resetTimer,
   } = useCardDeck();
 
+  // Create a ref for the input field
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Auto-focus on the input field when cards are hidden
+  useEffect(() => {
+    if (!isShowingCards && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isShowingCards]);
+
   // Format display time in seconds with one decimal place
   const formattedDisplayTime = (displayTime / 1000).toFixed(1);
 
@@ -84,6 +94,7 @@ const CountSightTrainer: React.FC<CountSightTrainerProps> = ({ className = '' })
                   type="text"
                   placeholder="Enter count..."
                   className="count-input"
+                  inputRef={inputRef}
                 />
                 <Button onClick={submitAnswer} className="submit-button">
                   Submit

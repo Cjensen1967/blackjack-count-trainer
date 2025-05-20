@@ -68,6 +68,11 @@ interface InputProps {
    * Step value for number inputs
    */
   step?: number;
+  
+  /**
+   * Ref to the input element for programmatic focus
+   */
+  inputRef?: React.Ref<HTMLInputElement>;
 }
 
 /**
@@ -92,6 +97,7 @@ const Input: React.FC<InputProps> = ({
   min,
   max,
   step,
+  inputRef,
 }) => {
   return (
     <div className="input-group">
@@ -112,6 +118,7 @@ const Input: React.FC<InputProps> = ({
         max={max}
         step={step}
         className={`input ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
+        ref={inputRef}
       />
     </div>
   );
