@@ -49,7 +49,6 @@ const CountSightTrainer: React.FC<CountSightTrainerProps> = ({ className = '' })
   return (
     <div className={`count-sight-trainer ${className}`}>
       <div>
-        <h1>Blackjack Count Trainer</h1>
         <p>
           Practice your Hi-Lo card counting skills
         </p>
