@@ -15,7 +15,8 @@ A web application to help users practice Hi-Lo card counting for blackjack. Buil
 - **Adaptive Timing System**: Automatically adjusts display time based on user performance
 - **Visual Card Representation**: Clear SVG card images for realistic practice
 - **Dark/Light Mode**: Toggle between themes with persistent preference
-- **Responsive Design**: Works on desktop and mobile devices
+- **Optimized Mobile Experience**: Full-screen layout with clean interface for mobile devices
+- **Responsive Design**: Adapts to different screen sizes with flexible layout
 
 ![Blackjack Count Trainer Screenshot](screenshot-url-here)
 
@@ -130,13 +131,29 @@ export default defineConfig({
 
 This setting ensures that all assets are loaded correctly from the root path of the domain.
 
+## Mobile Experience
+
+The application is optimized for mobile devices with several key features:
+
+- **Full-Screen Layout**: The app utilizes the entire screen space on mobile devices for an immersive experience
+- **Clean Interface**: Unnecessary UI elements have been removed to focus on the core functionality
+- **Flexible Layout**: The card grid and input areas automatically adjust to different screen sizes
+- **Optimized Touch Targets**: Buttons and interactive elements are sized appropriately for touch input
+- **Progressive Web App Support**: Meta tags enable installation as a home screen app on mobile devices
+
+To get the best experience on mobile:
+1. Access the application in your mobile browser
+2. For iOS users: Use the "Add to Home Screen" option in Safari
+3. For Android users: Use the "Add to Home Screen" or "Install App" option in Chrome
+
 ## Project Structure
 
 - `src/components/` - React components
-  - `CountSightTrainer.tsx` - Main training component
+  - `CountSightTrainer.tsx` - Main training component with card display and input functionality
   - `PlayingCard.tsx` - Card rendering component
   - `ThemeToggle.tsx` - Dark/light mode toggle
   - `UI/` - Reusable UI components
+- `src/App.tsx` - Root component with header and main content area (streamlined for mobile)
 - `src/hooks/` - Custom React hooks
   - `useCardDeck.ts` - Card deck management and game logic
   - `useTheme.ts` - Theme switching functionality
