@@ -28,7 +28,7 @@ __Core Functionality:__
 
    - Start with an initial timer (e.g., 10 seconds) for displaying the cards.
    - If the user answers correctly, decrease the time for the next hand (e.g., by 200ms), down to a minimum time (e.g., 2 seconds).
-   - If the user answers incorrectly, decrease the time for the next hand (e.g., by 200ms), up to the intial time (e.g., 10 seconds).
+   - If the user answers incorrectly, increase the time for the next hand (e.g., by 200ms), up to the intial time (e.g., 10 seconds).
    - Include a "Reset Timer" button to set the timer back to its initial value.
 
 5. __New Drill:__
