@@ -5,10 +5,31 @@ import Input from './UI/Input';
 import { useCardDeck } from '../hooks/useCardDeck';
 import type { Card } from '../utils/countingUtils';
 
+/**
+ * Props for the CountSightTrainer component
+ */
 interface CountSightTrainerProps {
+  /**
+   * Additional CSS class names to apply to the component
+   * @default ''
+   */
   className?: string;
 }
 
+/**
+ * Main component for the blackjack card counting training application
+ * 
+ * This component provides the core functionality for practicing card counting:
+ * 1. Displays a set of random cards for a limited time
+ * 2. Hides the cards and prompts the user to enter the count
+ * 3. Provides feedback on the user's answer
+ * 4. Adjusts difficulty based on performance
+ * 
+ * The component uses the useCardDeck hook to manage the game state and logic.
+ * 
+ * @param props - The component props
+ * @returns A React component for card counting practice
+ */
 const CountSightTrainer: React.FC<CountSightTrainerProps> = ({ className = '' }) => {
   const {
     cards,

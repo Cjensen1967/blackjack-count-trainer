@@ -2,27 +2,94 @@ import { useState, useCallback, useEffect } from 'react';
 import type { Card } from '../utils/countingUtils';
 import { generateDeck, dealCards, calculateTotalCount } from '../utils/countingUtils';
 
+/**
+ * Configuration options for the useCardDeck hook
+ */
 interface UseCardDeckProps {
+  /**
+   * Initial time (in milliseconds) to display cards before hiding them
+   * @default 10000 (10 seconds)
+   */
   initialDisplayTime?: number;
+  
+  /**
+   * Minimum display time (in milliseconds) that the timer can decrease to
+   * @default 2000 (2 seconds)
+   */
   minDisplayTime?: number;
+  
+  /**
+   * Amount (in milliseconds) to decrease the display time after a correct answer
+   * @default 200 (0.2 seconds)
+   */
   timeDecrement?: number;
+  
+  /**
+   * Amount (in milliseconds) to increase the display time after an incorrect answer
+   * @default 200 (0.2 seconds)
+   */
   timeIncrement?: number;
+  
+  /**
+   * Number of cards to deal in each round
+   * @default 12
+   */
   cardsPerDeal?: number;
 }
 
+/**
+ * Return type for the useCardDeck hook
+ */
 interface UseCardDeckReturn {
+  /** Array of currently dealt cards */
   cards: Card[];
+  
+  /** The correct count value for the current set of cards */
   correctCount: number;
+  
+  /** Current display time in milliseconds */
   displayTime: number;
+  
+  /** Whether cards are currently visible or hidden */
   isShowingCards: boolean;
+  
+  /** Current value of the user input field */
   userInput: string;
+  
+  /** Feedback message after user submits an answer */
   feedback: string | null;
+  
+  /** Function to deal a new set of cards and start a new round */
   dealNewCards: () => void;
+  
+  /** Function to handle changes to the user input field */
   handleUserInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  
+  /** Function to submit and check the user's answer */
   submitAnswer: () => void;
+  
+  /** Function to reset the timer to the initial value */
   resetTimer: () => void;
 }
 
+/**
+ * Custom hook for managing a card deck and implementing the card counting training logic
+ * 
+ * This hook provides functionality for:
+ * - Dealing cards from a standard deck
+ * - Managing the display time for cards (adaptive difficulty)
+ * - Handling user input for card counting answers
+ * - Providing feedback on user performance
+ * - Adjusting difficulty based on user performance
+ * 
+ * The adaptive timing system automatically adjusts the display time:
+ * - Correct answers: Display time decreases by timeDecrement (making it more challenging)
+ * - Incorrect answers: Display time increases by timeIncrement (making it easier)
+ * - The display time is bounded by minDisplayTime and initialDisplayTime
+ * 
+ * @param options - Configuration options for the card deck behavior
+ * @returns An object containing the current state and functions to interact with the card deck
+ */
 export const useCardDeck = ({
   initialDisplayTime = 10000, // 10 seconds
   minDisplayTime = 2000, // 2 seconds

@@ -3,6 +3,14 @@ import ThemeToggle from './components/ThemeToggle';
 import { useTheme } from './hooks/useTheme';
 import './App.css';
 
+/**
+ * Main application component
+ * 
+ * This is the root component of the Blackjack Count Trainer application.
+ * It sets up the overall layout and includes the theme toggle and main trainer component.
+ * 
+ * @returns The main application component
+ */
 function App() {
   const { theme } = useTheme();
 

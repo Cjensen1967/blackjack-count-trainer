@@ -1,10 +1,33 @@
 import React from 'react';
 import { useTheme } from '../hooks/useTheme';
 
+/**
+ * Props for the ThemeToggle component
+ */
 interface ThemeToggleProps {
+  /**
+   * Additional CSS class names to apply to the toggle button
+   * @default ''
+   */
   className?: string;
 }
 
+/**
+ * Component for toggling between light and dark themes
+ * 
+ * This component renders a button with appropriate icons for switching between
+ * light and dark themes. It uses the useTheme hook to manage theme state and
+ * persistence.
+ * 
+ * Features:
+ * - Displays a sun icon when in dark mode (clicking switches to light mode)
+ * - Displays a moon icon when in light mode (clicking switches to dark mode)
+ * - Includes appropriate ARIA labels for accessibility
+ * - Applies theme-specific styling
+ * 
+ * @param props - The component props
+ * @returns A React component for toggling the theme
+ */
 const ThemeToggle: React.FC<ThemeToggleProps> = ({ className = '' }) => {
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === 'dark';
