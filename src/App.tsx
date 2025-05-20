@@ -43,10 +43,6 @@ function App() {
         <main>
           <CountSightTrainer key={newDrillTrigger} />
         </main>
-        
-        <footer className="footer">
-          <p>© {new Date().getFullYear()} Blackjack Count Trainer</p>
-        </footer>
       </div>
     </div>
   );

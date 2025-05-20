@@ -66,12 +66,6 @@ const CountSightTrainer: React.FC<CountSightTrainerProps> = ({ className = '' })
 
   return (
     <div className={`count-sight-trainer ${className}`}>
-      <div>
-        <p>
-          Practice your Hi-Lo card counting skills
-        </p>
-      </div>
-
       <div className="casino-felt">
         <div className={`card-area ${isShowingCards ? '' : 'input-mode'}`}>
           <div className="card-grid">
