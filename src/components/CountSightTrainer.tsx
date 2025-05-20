@@ -14,6 +14,12 @@ interface CountSightTrainerProps {
    * @default ''
    */
   className?: string;
+  
+  /**
+   * Optional function to handle creating a new drill
+   * If provided, this will be used instead of the internal dealNewCards function
+   */
+  onNewDrill?: () => void;
 }
 
 /**
@@ -30,18 +36,19 @@ interface CountSightTrainerProps {
  * @param props - The component props
  * @returns A React component for card counting practice
  */
-const CountSightTrainer: React.FC<CountSightTrainerProps> = ({ className = '' }) => {
+const CountSightTrainer: React.FC<CountSightTrainerProps> = ({ className = '', onNewDrill }) => {
   const {
     cards,
-    displayTime,
     isShowingCards,
     userInput,
     feedback,
     dealNewCards,
     handleUserInput,
     submitAnswer,
-    resetTimer,
   } = useCardDeck();
+  
+  // Use the dealNewCards function from props if provided, otherwise use the one from the hook
+  const handleNewDrill = onNewDrill || dealNewCards;
 
   // Create a ref for the input field
   const inputRef = useRef<HTMLInputElement>(null);
@@ -53,24 +60,12 @@ const CountSightTrainer: React.FC<CountSightTrainerProps> = ({ className = '' })
     }
   }, [isShowingCards]);
 
-  // Format display time in seconds with one decimal place
-  const formattedDisplayTime = (displayTime / 1000).toFixed(1);
-
   return (
     <div className={`count-sight-trainer ${className}`}>
       <div>
         <p>
           Practice your Hi-Lo card counting skills
         </p>
-      </div>
-
-      <div>
-        <div>
-          Display Time: {formattedDisplayTime}s
-        </div>
-        <Button onClick={resetTimer} variant="secondary" size="sm">
-          Reset Timer
-        </Button>
       </div>
 
       <div className="casino-felt">
@@ -119,20 +114,7 @@ const CountSightTrainer: React.FC<CountSightTrainerProps> = ({ className = '' })
         </div>
       </div>
 
-      <div style={{ textAlign: 'center', marginTop: '1rem' }}>
-        <Button onClick={dealNewCards} variant="primary" size="lg">
-          New Drill
-        </Button>
-      </div>
 
-      <div className="counting-rules">
-        <h2>Hi-Lo Counting System</h2>
-        <ul>
-          <li>Cards 2-6: +1</li>
-          <li>Cards 7-9: 0</li>
-          <li>Cards 10, J, Q, K, A: -1</li>
-        </ul>
-      </div>
     </div>
   );
 };

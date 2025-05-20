@@ -1,6 +1,8 @@
 import CountSightTrainer from './components/CountSightTrainer';
 import ThemeToggle from './components/ThemeToggle';
+import Button from './components/UI/Button';
 import { useTheme } from './hooks/useTheme';
+import { useCardDeck } from './hooks/useCardDeck';
 import './App.css';
 
 /**
@@ -13,21 +15,32 @@ import './App.css';
  */
 function App() {
   const { theme } = useTheme();
+  const { dealNewCards } = useCardDeck();
 
   return (
     <div className={`app-wrapper ${theme}`}>
       <div className="container">
         <header className="header">
           <h1>Blackjack Count Trainer</h1>
-          <ThemeToggle />
+          <div className="header-controls">
+            <Button 
+              onClick={dealNewCards} 
+              variant="primary" 
+              size="sm" 
+              className="new-drill-button"
+            >
+              New Drill
+            </Button>
+            <ThemeToggle />
+          </div>
         </header>
         
         <main>
-          <CountSightTrainer />
+          <CountSightTrainer onNewDrill={dealNewCards} />
         </main>
         
         <footer className="footer">
-          <p>© {new Date().getFullYear()} Blackjack Count Trainer. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Blackjack Count Trainer</p>
         </footer>
       </div>
     </div>

@@ -79,7 +79,17 @@ html:not(.dark) .app-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.new-drill-button {
+  margin-right: 0.25rem;
 }
 
 .theme-toggle {
@@ -130,25 +140,35 @@ html:not(.dark) .app-wrapper {
 /* Mobile portrait optimization */
 @media (max-width: 767px) and (orientation: portrait) {
   .card-grid {
-    grid-template-columns: repeat(2, 1fr); /* Change to 2 columns for portrait */
+    grid-template-columns: repeat(3, 1fr); /* Keep 3 columns for portrait */
     gap: 0.5rem; /* Reduce gap for smaller screens */
   }
   
   .card-slot {
-    min-height: 7rem; /* Smaller card height */
+    min-height: 6.5rem; /* Moderate reduction in card height */
   }
   
   .container {
-    padding: 1rem; /* Reduce padding */
+    padding: 1rem 0.75rem; /* Reduce padding */
+  }
+  
+  /* Optimize header */
+  .header {
+    margin-bottom: 0.75rem;
   }
   
   h1 {
-    font-size: 1.5rem; /* Smaller heading */
+    font-size: 1.25rem; /* Smaller heading */
+  }
+  
+  /* Optimize card area */
+  .card-area {
+    min-height: 250px; /* Reduce minimum height */
   }
   
   .centered-input {
     width: 90%; /* Wider input container */
-    padding: 1rem; /* Less padding */
+    padding: 0.75rem; /* Less padding */
   }
   
   .playing-card img {
@@ -157,26 +177,41 @@ html:not(.dark) .app-wrapper {
   
   /* Improve touch targets for mobile */
   .button {
-    padding: 0.75rem 1rem; /* Larger touch targets */
+    padding: 0.5rem 0.75rem; /* Adjusted touch targets */
     min-height: 44px; /* Apple's recommended minimum */
   }
   
   .input {
-    padding: 0.75rem;
+    padding: 0.5rem;
     font-size: 16px; /* Prevents iOS zoom on focus */
   }
   
   /* Reduce spacing for mobile */
   .casino-felt {
-    padding: 1rem;
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
   }
   
+  /* Optimize counting rules section */
   .counting-rules {
-    margin-top: 1rem;
+    margin-top: 0.75rem;
+    padding-top: 0.5rem;
+  }
+  
+  .counting-rules h2 {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
   }
   
   .counting-rules ul {
     padding-left: 1rem;
+    margin-top: 0.25rem;
+  }
+  
+  /* Reduce footer size */
+  .footer {
+    margin-top: 0.75rem;
+    font-size: 0.75rem;
   }
 }
 
@@ -392,25 +427,4 @@ html:not(.dark) .app-wrapper {
 
 .dark .footer {
   color: #9ca3af;
-}
-
-.counting-rules {
-  margin-top: 2rem;
-  border-top: 1px solid #e5e7eb;
-  padding-top: 1rem;
-}
-
-.dark .counting-rules {
-  border-top-color: #374151;
-}
-
-.counting-rules h2 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.counting-rules ul {
-  list-style-type: disc;
-  padding-left: 1.25rem;
 }
