@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import type { Card } from '../utils/countingUtils';
 import { generateDeck, dealCards, calculateTotalCount } from '../utils/countingUtils';
 
@@ -104,18 +104,25 @@ export const useCardDeck = ({
   const [isShowingCards, setIsShowingCards] = useState<boolean>(false);
   const [userInput, setUserInput] = useState<string>('');
   const [feedback, setFeedback] = useState<string | null>(null);
+  // Timer reference to track and clear timeouts
+  const timerRef = useRef<number | null>(null);
 
   // Deal new cards
   const dealNewCards = useCallback(() => {
+    // Clear any existing timers
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    
     const newCards = dealCards(deck, cardsPerDeal);
     setCards(newCards);
     setCorrectCount(calculateTotalCount(newCards));
-    setIsShowingCards(true);
+    setIsShowingCards(true); // Always show cards
     setUserInput('');
     setFeedback(null);
     
     // Hide cards after displayTime
-    setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       setIsShowingCards(false);
     }, displayTime);
   }, [deck, cardsPerDeal, displayTime]);
@@ -159,6 +166,15 @@ export const useCardDeck = ({
   useEffect(() => {
     dealNewCards();
   }, [dealNewCards]);
+  
+  // Clean up timer when component unmounts
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, []);
 
   return {
     cards,

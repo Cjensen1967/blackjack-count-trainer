@@ -1,8 +1,8 @@
+import { useState, useCallback } from 'react';
 import CountSightTrainer from './components/CountSightTrainer';
 import ThemeToggle from './components/ThemeToggle';
 import Button from './components/UI/Button';
 import { useTheme } from './hooks/useTheme';
-import { useCardDeck } from './hooks/useCardDeck';
 import './App.css';
 
 /**
@@ -15,7 +15,12 @@ import './App.css';
  */
 function App() {
   const { theme } = useTheme();
-  const { dealNewCards } = useCardDeck();
+  const [newDrillTrigger, setNewDrillTrigger] = useState(0);
+  
+  // Function to trigger a new drill
+  const triggerNewDrill = useCallback(() => {
+    setNewDrillTrigger(prev => prev + 1);
+  }, []);
 
   return (
     <div className={`app-wrapper ${theme}`}>
@@ -24,7 +29,7 @@ function App() {
           <h1>Blackjack Count Trainer</h1>
           <div className="header-controls">
             <Button 
-              onClick={dealNewCards} 
+              onClick={triggerNewDrill} 
               variant="primary" 
               size="sm" 
               className="new-drill-button"
@@ -36,7 +41,7 @@ function App() {
         </header>
         
         <main>
-          <CountSightTrainer onNewDrill={dealNewCards} />
+          <CountSightTrainer key={newDrillTrigger} />
         </main>
         
         <footer className="footer">

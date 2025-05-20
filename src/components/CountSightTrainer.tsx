@@ -46,17 +46,27 @@ const CountSightTrainer: React.FC<CountSightTrainerProps> = ({ className = '', o
     handleUserInput,
     submitAnswer,
   } = useCardDeck();
-  
-  // Use the dealNewCards function from props if provided, otherwise use the one from the hook
-  const handleNewDrill = onNewDrill || dealNewCards;
 
   // Create a ref for the input field
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Auto-focus on the input field when cards are hidden
+  // Deal new cards when component mounts or when key changes
   useEffect(() => {
+    dealNewCards();
+  }, [dealNewCards]);
+
+  // Auto-focus on the input field when cards are initially hidden
+  useEffect(() => {
+    // Only focus when transitioning from showing cards to hidden
     if (!isShowingCards && inputRef.current) {
-      inputRef.current.focus();
+      // Add a small delay to ensure it doesn't interfere with button clicks
+      const focusTimer = setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }, 100);
+      
+      return () => clearTimeout(focusTimer);
     }
   }, [isShowingCards]);
 
