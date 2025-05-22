@@ -10,13 +10,23 @@ A web application to help users practice Hi-Lo card counting for blackjack. Buil
 
 ## Features
 
-- **Card Counting Practice**: Display random playing cards for a timed period to practice counting
-- **Hi-Lo Card Counting System**: Implementation of the popular Hi-Lo counting strategy
-- **Adaptive Timing System**: Automatically adjusts display time based on user performance
-- **Visual Card Representation**: Clear SVG card images for realistic practice
-- **Dark/Light Mode**: Toggle between themes with persistent preference
-- **Optimized Mobile Experience**: Full-screen layout with clean interface for mobile devices
-- **Responsive Design**: Adapts to different screen sizes with flexible layout
+- **Redesigned Card Counting Practice**: Train with a new interface that displays a configurable number of random playing cards.
+- **Configurable Training Settings**: Customize your practice sessions via the Settings page:
+    - **Drill Type**: Choose between Standard drills or Deck Training mode.
+    - **Number of Cards**: Set the number of cards to display per drill (e.g., 3, 6, 9, 12).
+    - **Card Display Time**: Adjust the initial time cards are shown (e.g., 3s, 5s, 10s, 15s).
+- **Adaptive Timing System**: While initial display time is configurable, the system dynamically adjusts subsequent card display times based on your performance for a progressive challenge.
+- **Customizable Session Timer**: Configure a session timer on the Settings page:
+    - **Visibility**: Show or hide the timer during drills.
+    - **Behavior**: Set to count up or count down.
+    - **Duration**: Select a predefined duration (e.g., 30s, 60s, 90s, 120s) for countdown mode.
+- **Hi-Lo Card Counting System**: Utilizes the popular and effective Hi-Lo strategy for learning card counting.
+- **Visual Card Representation**: Clear and realistic SVG card images for an authentic practice experience.
+- **Redesigned User Interface**: Modern and intuitive UI with a new layout structure and an in-drill timer display.
+- **Dark/Light Mode**: Toggle between dark and light themes with your preference saved locally.
+- **Optimized Mobile Experience**: Full-screen layout with a clean, touch-friendly interface for practice on the go.
+- **Responsive Design**: Adapts seamlessly to various screen sizes for a consistent experience across devices.
+- **Upcoming Strategy Section**: A dedicated page (`/strategy`) with detailed information about card counting strategies is planned for a future update.
 
 ![Blackjack Count Trainer Screenshot](screenshot-url-here)
 
@@ -86,14 +96,15 @@ npm run preview
 
 ## How to Use the Application
 
-1. **Start a New Drill**: Click the "New Drill" button to display a set of random cards.
-2. **Count the Cards**: Cards will be displayed for a limited time. Apply the Hi-Lo counting system to calculate the total count.
-3. **Enter Your Answer**: After the cards disappear, enter your count in the input field.
-4. **Get Feedback**: Submit your answer to receive immediate feedback on your accuracy.
-5. **Adaptive Timing**: The display time will automatically adjust based on your performance:
-   - Correct answers: Display time decreases (making it more challenging)
-   - Incorrect answers: Display time increases (giving you more time to practice)
-6. **Reset Timer**: If needed, you can reset the timer to the default value.
+1. **Configure Settings (Optional)**: Navigate to the "Settings" page to customize drill type, number of cards, card display time, and session timer preferences.
+2. **Start a New Drill**: Click the "New Drill" button on the main training page to display a set of random cards according to your settings.
+3. **Count the Cards**: Cards will be displayed for the configured time. A timer will show the remaining display duration. Apply the Hi-Lo counting system to calculate the total count.
+4. **Enter Your Answer**: After the cards disappear, enter your count in the input field.
+5. **Get Feedback**: Submit your answer to receive immediate feedback on your accuracy.
+6. **Adaptive Timing**: If the initial display time is set, the system may still adjust it for subsequent rounds based on your performance:
+   - Correct answers: Display time can decrease (making it more challenging).
+   - Incorrect answers: Display time can increase (giving you more time to practice).
+7. **Reset Timer**: If needed, you can reset the card display timer to its default or configured value.
 
 ## Deployment
 
@@ -149,16 +160,22 @@ To get the best experience on mobile:
 ## Project Structure
 
 - `src/components/` - React components
-  - `CountSightTrainer.tsx` - Main training component with card display and input functionality
+  - `CountSightTrainerNew.tsx` - Main training component with card display, input functionality, and settings integration.
   - `PlayingCard.tsx` - Card rendering component
+  - `Settings.tsx` - Component for configuring training settings.
   - `ThemeToggle.tsx` - Dark/light mode toggle
-  - `UI/` - Reusable UI components
-- `src/App.tsx` - Root component with header and main content area (streamlined for mobile)
+  - `Timer.tsx` - Component for displaying countdown/countup timers.
+  - `UI/` - Reusable UI components (e.g., buttons, inputs)
+  - `Layout.tsx` - Main layout structure for pages.
+- `src/App.tsx` - Root component with router, header, and main content area.
+- `src/contexts/` - React contexts
+  - `SettingsContext.tsx` - React context for managing and providing application settings.
 - `src/hooks/` - Custom React hooks
-  - `useCardDeck.ts` - Card deck management and game logic
-  - `useTheme.ts` - Theme switching functionality
+  - `useCardDeck.ts` - Card deck management, game logic, and adaptive timing.
+  - `useTheme.ts` - Theme switching functionality.
+  - `useSettings.ts` - Hook for managing user settings.
 - `src/utils/` - Utility functions
-  - `countingUtils.ts` - Card counting logic
+  - `countingUtils.ts` - Card counting logic.
 - `public/images/cards/` - SVG card images
 
 ## Acknowledgements
