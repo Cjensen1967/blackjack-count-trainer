@@ -17,9 +17,23 @@ interface TimerProps {
   isRunning?: boolean;
   
   /**
-   * Callback function when the timer reaches zero
+   * Direction for the timer to count
+   * @default 'down'
+   */
+  countDirection?: 'up' | 'down';
+  
+  /**
+   * Callback function when the timer reaches zero (for countdown)
+   * or the specified duration (for count up)
    */
   onComplete?: () => void;
+  
+  /**
+   * Maximum time for count up timer (in seconds)
+   * When reached, onComplete will be called
+   * @default undefined
+   */
+  maxTime?: number;
   
   /**
    * Additional CSS class names to apply to the component
@@ -39,38 +53,57 @@ interface TimerProps {
  */
 const Timer: React.FC<TimerProps> = ({ 
   initialTime = 0, 
-  isRunning = false, 
+  isRunning = false,
+  countDirection = 'down',
   onComplete,
+  maxTime,
   className = '' 
 }) => {
-  const [timeRemaining, setTimeRemaining] = useState(initialTime);
+  const [time, setTime] = useState(initialTime);
+  
+  useEffect(() => {
+    // Reset time when initialTime changes
+    setTime(initialTime);
+  }, [initialTime]);
   
   useEffect(() => {
     let interval: number | null = null;
     
-    if (isRunning && timeRemaining > 0) {
+    if (isRunning) {
       interval = window.setInterval(() => {
-        setTimeRemaining(prevTime => {
-          const newTime = prevTime - 1;
-          if (newTime <= 0 && onComplete) {
-            onComplete();
+        setTime(prevTime => {
+          let newTime;
+          
+          if (countDirection === 'down') {
+            // Count down
+            newTime = prevTime - 1;
+            if (newTime <= 0 && onComplete) {
+              onComplete();
+              return 0;
+            }
+            return Math.max(0, newTime);
+          } else {
+            // Count up
+            newTime = prevTime + 1;
+            if (maxTime && newTime >= maxTime && onComplete) {
+              onComplete();
+              return maxTime;
+            }
+            return newTime;
           }
-          return Math.max(0, newTime);
         });
       }, 1000);
-    } else if (timeRemaining <= 0 && onComplete) {
-      onComplete();
     }
     
     return () => {
       if (interval) window.clearInterval(interval);
     };
-  }, [isRunning, timeRemaining, onComplete]);
+  }, [isRunning, countDirection, onComplete, maxTime]);
   
   // Calculate hours, minutes, seconds
-  const hours = Math.floor(timeRemaining / 3600);
-  const minutes = Math.floor((timeRemaining % 3600) / 60);
-  const seconds = timeRemaining % 60;
+  const hours = Math.floor(time / 3600);
+  const minutes = Math.floor((time % 3600) / 60);
+  const seconds = time % 60;
   
   // Format with leading zeros
   const formatTime = (value: number): string => {

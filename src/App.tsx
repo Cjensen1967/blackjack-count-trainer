@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import CountSightTrainerNew from './components/CountSightTrainerNew';
+import Settings from './components/Settings';
+import { SettingsProvider } from './contexts/SettingsContext';
 import './App.css';
 
 /**
@@ -14,7 +16,8 @@ import './App.css';
 function App() {
   // We'll add more routes as we implement additional screens
   return (
-    <Router>
+    <SettingsProvider>
+      <Router>
       <Routes>
         {/* Home/Training route */}
         <Route 
@@ -53,10 +56,7 @@ function App() {
           path="/settings" 
           element={
             <Layout title="Settings">
-              <div className="placeholder-content">
-                <h2>Settings</h2>
-                <p>Settings content will be implemented in a future update.</p>
-              </div>
+              <Settings />
             </Layout>
           } 
         />
@@ -65,6 +65,7 @@ function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
+    </SettingsProvider>
   );
 }
 

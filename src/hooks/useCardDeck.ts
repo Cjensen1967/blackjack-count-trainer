@@ -107,6 +107,11 @@ export const useCardDeck = ({
   // Timer reference to track and clear timeouts
   const timerRef = useRef<number | null>(null);
 
+  // Update display time when initialDisplayTime changes
+  useEffect(() => {
+    setDisplayTime(initialDisplayTime);
+  }, [initialDisplayTime]);
+
   // Deal new cards
   const dealNewCards = useCallback(() => {
     // Clear any existing timers
