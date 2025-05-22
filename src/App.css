@@ -1,12 +1,19 @@
 :root {
+  /* New color scheme */
+  --background-dark: #111714;
+  --background-dark-secondary: #1c2620;
+  --card-background: #29382f;
+  --text-dark: #ffffff;
+  --text-muted: #9eb7a8;
+  --accent-color: #38e07b;
+  
+  /* Original colors kept for compatibility */
   --background-light: #ffffff;
   --text-light: #213547;
-  --background-dark: #242424;
-  --text-dark: rgba(255, 255, 255, 0.87);
   --casino-green: #0a5c36;
-  --casino-green-dark: #0b6e42; /* Brighter, more vibrant green for dark mode */
-  --primary-color: #646cff;
-  --primary-color-hover: #535bf2;
+  --casino-green-dark: #0b6e42;
+  --primary-color: #38e07b;
+  --primary-color-hover: #2bc665;
   --secondary-color: #f9f9f9;
   --secondary-color-dark: #1a1a1a;
   --card-transition-duration: 0.4s;
@@ -16,11 +23,11 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Space Grotesk", "Noto Sans", system-ui, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--background-light);
-  color: var(--text-light);
+  background-color: var(--background-dark);
+  color: var(--text-dark);
   transition: background-color 0.3s, color 0.3s;
 }
 
@@ -37,15 +44,15 @@ html.dark .app-wrapper {
 }
 
 html:not(.dark) {
-  background-color: var(--background-light);
-  color: var(--text-light);
+  background-color: var(--background-dark);
+  color: var(--text-dark);
 }
 
 html:not(.dark) body,
 html:not(.dark) #root,
 html:not(.dark) .app-wrapper {
-  background-color: var(--background-light);
-  color: var(--text-light);
+  background-color: var(--background-dark);
+  color: var(--text-dark);
 }
 
 /* Ensure the root div also has the correct background */
@@ -112,6 +119,38 @@ main {
   margin-right: 0.25rem;
 }
 
+/* New App Header */
+.app-header {
+  display: flex;
+  align-items: center;
+  background-color: var(--background-dark);
+  padding: 1rem;
+  position: relative;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  color: var(--text-dark);
+}
+
+.header-title {
+  flex: 1;
+  text-align: center;
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin: 0;
+  padding-right: 2rem; /* Balance the back button */
+}
+
+.header-spacer {
+  width: 2rem; /* Same width as back button for balance */
+}
+
 .theme-toggle {
   padding: 0.5rem;
   border-radius: 50%;
@@ -130,19 +169,18 @@ main {
 }
 
 .casino-felt {
-  background-color: var(--casino-green);
+  background-color: var(--background-dark);
   color: white;
   border-radius: 0.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
 .dark .casino-felt {
-  background-color: var(--casino-green-dark);
+  background-color: var(--background-dark);
 }
 
 /* Card area and grid */
@@ -274,11 +312,23 @@ main {
 
 .playing-card img {
   width: 100%;
-  max-width: 6rem;
   height: auto;
   object-fit: contain;
   border-radius: 0.5rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Adjust card image size for different screen sizes */
+@media (max-width: 767px) {
+  .playing-card img {
+    max-width: 100%; /* Full width on mobile */
+  }
+}
+
+@media (min-width: 768px) {
+  .playing-card img {
+    max-width: 6rem; /* Limit size on larger screens */
+  }
 }
 
 /* Centered input container */
@@ -359,15 +409,21 @@ main {
 
 .input {
   width: 100%;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.375rem;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: var(--card-background);
+  color: white;
+  font-size: 1rem;
+}
+
+.input::placeholder {
+  color: var(--text-muted);
 }
 
 .dark .input {
-  background-color: #1f2937;
-  border-color: #374151;
+  background-color: var(--card-background);
+  border-color: transparent;
   color: white;
 }
 
@@ -380,32 +436,34 @@ main {
 }
 
 .button-primary {
-  background-color: #3b82f6;
-  color: white;
+  background-color: var(--accent-color);
+  color: var(--background-dark);
   border: none;
+  font-weight: bold;
 }
 
 .button-primary:hover {
-  background-color: #2563eb;
+  background-color: var(--primary-color-hover);
 }
 
 .button-secondary {
-  background-color: #e5e7eb;
-  color: #1f2937;
+  background-color: var(--card-background);
+  color: white;
   border: none;
+  font-weight: bold;
 }
 
 .button-secondary:hover {
-  background-color: #d1d5db;
+  background-color: #334a3f;
 }
 
 .dark .button-secondary {
-  background-color: #374151;
+  background-color: var(--card-background);
   color: white;
 }
 
 .dark .button-secondary:hover {
-  background-color: #4b5563;
+  background-color: #334a3f;
 }
 
 .feedback {
@@ -453,4 +511,245 @@ main {
 
 .dark .footer {
   color: #9ca3af;
+}
+
+/* Bottom Navigation */
+.bottom-navigation {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: var(--background-dark-secondary);
+  border-top: 1px solid var(--card-background);
+  padding: 0.5rem 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text-muted);
+  padding: 0.5rem;
+  transition: color 0.2s;
+}
+
+.nav-item.active {
+  color: var(--text-dark);
+}
+
+.nav-icon {
+  margin-bottom: 0.25rem;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-item span {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Add padding to the bottom of the app to account for the fixed navigation */
+.app-wrapper {
+  padding-bottom: 4rem;
+}
+
+/* Timer Component */
+.timer-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.timer-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.timer-value {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--card-background);
+  color: var(--text-dark);
+  border-radius: 0.5rem;
+  height: 3.5rem;
+  width: 100%;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.timer-label {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-dark);
+  text-align: center;
+}
+
+/* Layout Component */
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--background-dark);
+  width: 100%;
+  margin: 0 auto;
+}
+
+.app-content {
+  flex: 1;
+  padding: 0 1rem;
+  overflow-y: auto;
+  padding-bottom: 5rem; /* Extra padding to account for bottom navigation */
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Adjust layout for different screen sizes */
+@media (max-width: 767px) {
+  .app-content {
+    padding: 0 0.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .app-content {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .app-layout {
+    max-width: 1400px; /* Maximum width for very large screens */
+  }
+}
+
+/* New CountSightTrainer Component */
+.count-sight-trainer-new {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0.5rem;
+}
+
+.count-heading {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 1rem 0;
+}
+
+.card-grid-new {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Fixed 3-column layout for mobile */
+  gap: 0.5rem; /* Smaller gap for mobile */
+  margin-bottom: 1rem;
+  transition: opacity var(--card-transition-duration);
+  max-width: 1200px; /* Maximum width for larger screens */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Adjust grid for larger screens */
+@media (min-width: 768px) {
+  .card-grid-new {
+    grid-template-columns: repeat(4, 1fr); /* 4 columns on tablet */
+    gap: 0.75rem; /* Larger gap on bigger screens */
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-grid-new {
+    grid-template-columns: repeat(6, 1fr); /* 6 columns on desktop */
+  }
+}
+
+.card-grid-new.input-mode {
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.card-slot-new {
+  aspect-ratio: 1/1;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: all var(--card-transition-duration);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Adjust card size for different screen sizes */
+@media (max-width: 767px) {
+  .card-slot-new {
+    min-height: 5.5rem; /* Smaller height on mobile */
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .card-slot-new {
+    min-height: 7rem; /* Medium height on tablet */
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-slot-new {
+    min-height: 8rem; /* Larger height on desktop */
+  }
+}
+
+.input-area {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+}
+
+.count-input-new {
+  width: 100%;
+  height: 3.5rem;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  padding: 0.75rem 0;
+}
+
+.submit-button-new, .new-drill-button-new {
+  min-width: 84px;
+  max-width: 480px;
+  width: 100%;
+}
+
+/* Placeholder Content */
+.placeholder-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  text-align: center;
+  height: 100%;
+  min-height: 50vh;
+}
+
+.placeholder-content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.placeholder-content p {
+  color: var(--text-muted);
+  max-width: 600px;
 }

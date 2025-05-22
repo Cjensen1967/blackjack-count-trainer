@@ -1,50 +1,71 @@
-import { useState, useCallback } from 'react';
-import CountSightTrainer from './components/CountSightTrainer';
-import ThemeToggle from './components/ThemeToggle';
-import Button from './components/UI/Button';
-import { useTheme } from './hooks/useTheme';
+import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Layout from './components/Layout';
+import CountSightTrainerNew from './components/CountSightTrainerNew';
 import './App.css';
 
 /**
  * Main application component
  * 
  * This is the root component of the Blackjack Count Trainer application.
- * It sets up the overall layout and includes the theme toggle and main trainer component.
+ * It sets up routing and includes the main layout with navigation.
  * 
  * @returns The main application component
  */
 function App() {
-  const { theme } = useTheme();
-  const [newDrillTrigger, setNewDrillTrigger] = useState(0);
-  
-  // Function to trigger a new drill
-  const triggerNewDrill = useCallback(() => {
-    setNewDrillTrigger(prev => prev + 1);
-  }, []);
-
+  // We'll add more routes as we implement additional screens
   return (
-    <div className={`app-wrapper ${theme}`}>
-      <div className="container">
-        <header className="header">
-          <h1>Blackjack Count Trainer</h1>
-          <div className="header-controls">
-            <Button 
-              onClick={triggerNewDrill} 
-              variant="primary" 
-              size="sm" 
-              className="new-drill-button"
-            >
-              New Drill
-            </Button>
-            <ThemeToggle />
-          </div>
-        </header>
+    <Router>
+      <Routes>
+        {/* Home/Training route */}
+        <Route 
+          path="/" 
+          element={
+            <Layout title="Hi-Lo Blackjack Training" showBackButton={false}>
+              <CountSightTrainerNew />
+            </Layout>
+          } 
+        />
         
-        <main>
-          <CountSightTrainer key={newDrillTrigger} />
-        </main>
-      </div>
-    </div>
+        {/* Training route (same as home for now) */}
+        <Route 
+          path="/training" 
+          element={
+            <Layout title="Hi-Lo Blackjack Training">
+              <CountSightTrainerNew />
+            </Layout>
+          } 
+        />
+        
+        {/* Placeholder routes for future screens */}
+        <Route 
+          path="/strategy" 
+          element={
+            <Layout title="Hi-Lo Blackjack Strategy">
+              <div className="placeholder-content">
+                <h2>Strategy Content</h2>
+                <p>Strategy content will be implemented in a future update.</p>
+              </div>
+            </Layout>
+          } 
+        />
+        
+        <Route 
+          path="/settings" 
+          element={
+            <Layout title="Settings">
+              <div className="placeholder-content">
+                <h2>Settings</h2>
+                <p>Settings content will be implemented in a future update.</p>
+              </div>
+            </Layout>
+          } 
+        />
+        
+        {/* Redirect any unknown routes to home */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Router>
   );
 }
 
